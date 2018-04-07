@@ -85,6 +85,8 @@ case.hpp
 /home/giku/Documents/LIFAP6/projet/magic-maze-etu/MagicMaze/Src/case.hpp
 mur.hpp
 /home/giku/Documents/LIFAP6/projet/magic-maze-etu/MagicMaze/Src/mur.hpp
+couleurs.hpp
+/home/giku/Documents/LIFAP6/projet/magic-maze-etu/MagicMaze/Src/couleurs.hpp
 vector
 -
 iostream

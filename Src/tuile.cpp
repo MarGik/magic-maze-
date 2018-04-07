@@ -6,6 +6,8 @@
 #include <cstdlib>
 #include <cstring>
 
+
+
 namespace MMaze {
 
     /*
@@ -22,7 +24,7 @@ namespace MMaze {
      */
 Tuile::Tuile() {
 
-    tuile_tab=(char*) (malloc(16 * sizeof(Case)));
+    tuile_tab=(char*) (malloc(16 * sizeof(case_tuile)));
     mur_tab  =(char*) (malloc(24* sizeof(Mur)));
 }
 
@@ -33,9 +35,45 @@ Tuile::Tuile() {
 void Tuile::generateTuileDepart()   {
 
     for (int i = 0; i <16; ++i) {
-        Case * c = new Case(i);
-        memcpy(tuile_tab+i* sizeof(Case),c,sizeof(Case));
+        case_tuile c_t;
+        c_t.ca  = new Case(i);
+            switch (i) {
+                case 2 :{
+                    c_t.f=porte;
+                    c_t.color=ORANGE;
+                    break;
+                }
+                case 4 :{
+                    c_t.f=porte;
+
+                    c_t.color=VIOLET;
+                    break;
+                }
+                case 11 :{
+                    c_t.f=porte;
+                    c_t.color=VERT;
+                    break;
+                }
+                case 13 :{
+                    c_t.f=porte;
+                    c_t.color=JAUNE;
+                    break;
+                }
+                default : {
+                    c_t.f = norm;
+                    c_t.color=AUCUNE;
+                    break;
+                }
+
+            }
+
+        c_t.index_=i;
+
+
+        memcpy(tuile_tab+i* sizeof(case_tuile),&c_t,sizeof(case_tuile));
+        delete c_t.ca;
     }
+
 
 /*        for (int j = 0; j <4; ++j) {
             for (int i = 1; i < 4; ++i) {
@@ -54,17 +92,46 @@ void Tuile::generateTuileDepart()   {
 
 void Tuile::generateTuileClasique() {
     Melangeur * m = new Melangeur (sizeof(Case));
-    //insertion des cases dans melangeur
-    for (int i = 0; i <16; ++i) {
-        Case * c = new Case(i);
-        m->inserer(&c);
-        delete c;
+    //insertion dans un melangeur touts les endroit ou on peut placer des portes
+    //  //0 1 2 3 4 7 8 11 12 13 14 15
+    unsigned int array[] = {0, 1, 2, 3, 4, 7, 8, 11, 12, 13, 14, 15};
+
+    Melangeur * mP = new Melangeur(sizeof(unsigned int));
+    for (int j = 0; j <12; ++j) {
+        mP->inserer(&array[j]);
     }
 
+    mP->afficher();
+
+    //insertion des cases dans melangeur
+    for (int i = 0; i <16; ++i) {
+        case_tuile c_t;
+        int nb_portes = (rand()%4)+1;
+        while(nb_portes >0){
+            if(nb_portes==1){
+                c_t.f=porte;
+                c_t.color=AUCUNE;
+            }
+            if(mP->taille_reelle>0){
+                void * elem = malloc(sizeof(unsigned int));
+                mP->retirer(elem); //de corectat
+                c_t.index_=*((unsigned int *) elem);
+                free(elem);
+            }
+            c_t.color=Couleur(rand()%4 +1);
+            nb_portes--;
+        }
+        m->inserer(&c_t);
+  //      m->afficher();
+    }
+
+    //generation de la tuile
     for (int j = 0; j <16; ++j) {
-        Case * c;
-        m->retirer(&c);
-        memcpy(tuile_tab+j* sizeof(Case),c,sizeof(Case));
+        //Case * c;
+        std::cout << "stoped\n";
+        case_tuile c_t;
+        m->retirer(&c_t);
+        memcpy(tuile_tab+j* sizeof(case_tuile),&c_t,sizeof(case_tuile));
     }
 
 
@@ -87,6 +154,7 @@ void Tuile::afficher_horizontal(std::ostream& out, unsigned int i) const {
   assert(i < 5) ;
   if(i == 0 || i == 4) {
     out << "+---+---+---+---+" ;
+
   } else {
     out << "+" ;
     for(unsigned int m = 0; m < 4; ++m) {
@@ -95,10 +163,11 @@ void Tuile::afficher_horizontal(std::ostream& out, unsigned int i) const {
       if(mur(Mur(up, down))) {
         out << "---+" ;
       } else {
-        out << "   +" ;
+          out << "   +";
       }
     }
   }
+
 }
 
 void Tuile::afficher_vertical(std::ostream& out, unsigned int i) const {
@@ -135,9 +204,12 @@ std::ostream& operator<< (std::ostream& out, const Tuile& t) {
         free(tuile_tab);
     }
 
-void Tuile::generateMur(bool b) {
+    void Tuile::generateMur(bool b) {
+        if(b){//tuile depart
+            
+        }else{//tuile clasique
 
-
-}
+        }
+    }
 
 } //end of namespace MMaze

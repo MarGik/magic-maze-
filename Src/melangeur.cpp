@@ -32,6 +32,7 @@ void Melangeur::inserer(const void* elem) {
 
 void Melangeur::retirer(void* elem) {
 
+
      //  srand(time(NULL));
        int r = rand() % taille_reelle;
 

@@ -1,4 +1,4 @@
-#0ifndef MMAZE_MUR_HPP
+#ifndef MMAZE_MUR_HPP
 #define MMAZE_MUR_HPP
 
 #include "case.hpp"

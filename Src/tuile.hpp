@@ -3,12 +3,23 @@
 
 #include "case.hpp"
 #include "mur.hpp"
-
+#include "couleurs.hpp"
 #include <vector>
 #include <iostream>
 #include "melangeur.hpp"
 
 namespace MMaze {
+
+enum Format {porte=-1,norm=0,teleport=1};
+
+struct case_tuile{
+    Format  f;
+    Couleur color;
+    int index_;
+    Case * ca;
+
+};
+
 
 class Tuile {
 
@@ -46,6 +57,7 @@ class Tuile {
 
     char * tuile_tab;
     char * mur_tab;
+    case_tuile c_t;
 
 
 
