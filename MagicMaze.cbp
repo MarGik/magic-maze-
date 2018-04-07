@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="MagicMaze" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/MagicMaze" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/MagicMaze" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="Src/Makefile" />
+		<Unit filename="Src/case.cpp" />
+		<Unit filename="Src/case.hpp" />
+		<Unit filename="Src/couleurs.cpp" />
+		<Unit filename="Src/couleurs.hpp" />
+		<Unit filename="Src/direction.cpp" />
+		<Unit filename="Src/direction.hpp" />
+		<Unit filename="Src/melangeur.cpp" />
+		<Unit filename="Src/melangeur.hpp" />
+		<Unit filename="Src/mur.cpp" />
+		<Unit filename="Src/mur.hpp" />
+		<Unit filename="Src/test_melangeur.cpp" />
+		<Unit filename="Src/tuile.cpp" />
+		<Unit filename="Src/tuile.hpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
