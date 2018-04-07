@@ -68,6 +68,7 @@ void Tuile::generateTuileDepart()   {
             }
 
         c_t.index_=i;
+        c_t.ca = new Case(i);
 
 
         memcpy(tuile_tab+i* sizeof(case_tuile),&c_t,sizeof(case_tuile));
@@ -101,26 +102,44 @@ void Tuile::generateTuileClasique() {
         mP->inserer(&array[j]);
     }
 
-    mP->afficher();
+    //mP->afficher();
+
+    int nb_portes = 4;
 
     //insertion des cases dans melangeur
+    unsigned int j =0;
+
     for (int i = 0; i <16; ++i) {
+
+
         case_tuile c_t;
-        int nb_portes = (rand()%4)+1;
-        while(nb_portes >0){
-            if(nb_portes==1){
+
+        std::cout << nb_portes << "||" << i << ","<<array[j] <<std::endl;
+
+        if(nb_portes >0 && array[j] == i){
+
+            if(mP->taille_reelle>0) {
                 c_t.f=porte;
-                c_t.color=AUCUNE;
+                if(nb_portes==1){
+                    c_t.color=AUCUNE;
+                }
+                mP->retirer(&c_t.index_); //de corectat
+                if(nb_portes>1){
+                c_t.color = Couleur(rand() % 4 + 1);
+                }
+
             }
-            if(mP->taille_reelle>0){
-                void * elem = malloc(sizeof(unsigned int));
-                mP->retirer(elem); //de corectat
-                c_t.index_=*((unsigned int *) elem);
-                free(elem);
-            }
-            c_t.color=Couleur(rand()%4 +1);
+j++;
             nb_portes--;
+
+        }else {
+           c_t.f=norm;
+            c_t.color=AUCUNE;
+            c_t.index_=i;
         }
+        c_t.ca = new Case(i);
+        if(array[j]<i) j++;
+
         m->inserer(&c_t);
   //      m->afficher();
     }
@@ -128,7 +147,7 @@ void Tuile::generateTuileClasique() {
     //generation de la tuile
     for (int j = 0; j <16; ++j) {
         //Case * c;
-        std::cout << "stoped\n";
+    //    std::cout << "stoped\n";
         case_tuile c_t;
         m->retirer(&c_t);
         memcpy(tuile_tab+j* sizeof(case_tuile),&c_t,sizeof(case_tuile));
@@ -154,6 +173,7 @@ void Tuile::afficher_horizontal(std::ostream& out, unsigned int i) const {
   assert(i < 5) ;
   if(i == 0 || i == 4) {
     out << "+---+---+---+---+" ;
+
 
   } else {
     out << "+" ;
@@ -192,8 +212,15 @@ std::ostream& operator<< (std::ostream& out, const Tuile& t) {
   for(unsigned int i = 0; i < 4; ++i) {
     t.afficher_horizontal(out, i) ;
     out << std::endl ;
-    t.afficher_vertical(out, i) ;
+
+      for (int k = 0; k <4; ++k) {
+          case_tuile c_t;
+          memcpy(&c_t, (t.tuile_tab + (k + i * 4) * sizeof(case_tuile)), sizeof(case_tuile));
+          std::cout << c_t.f << "+";
+      }
+      t.afficher_vertical(out, i) ;
     out << std::endl ;
+
   }
   t.afficher_horizontal(out, 4) ;
   return out ;
@@ -206,7 +233,7 @@ std::ostream& operator<< (std::ostream& out, const Tuile& t) {
 
     void Tuile::generateMur(bool b) {
         if(b){//tuile depart
-            
+
         }else{//tuile clasique
 
         }

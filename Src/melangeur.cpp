@@ -33,11 +33,11 @@ void Melangeur::inserer(const void* elem) {
 void Melangeur::retirer(void* elem) {
 
 
-     //  srand(time(NULL));
+
        int r = rand() % taille_reelle;
 
 
-       cout << " i've chosen " << r << "to remove" << endl;
+      // cout << " i've chosen " << r << "to remove" << endl;
 
        //on prend la valeure d'une case aleatoirement choisi et le met dans elem
        memcpy(elem, tab_melange + r * octets, octets);

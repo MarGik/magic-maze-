@@ -4,11 +4,11 @@
 
 #include <iostream>
 #include <cstdlib>
-
+#include <time.h>
 using namespace MMaze ;
 
 int main() {
-
+  srand(time(NULL));
   Tuile t ;
   t.generateTuileClasique();
   Tuile depart;
