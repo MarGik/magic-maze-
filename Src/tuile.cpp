@@ -26,6 +26,7 @@ Tuile::Tuile() {
 
     tuile_tab=(char*) (malloc(16 * sizeof(case_tuile)));
     mur_tab  =(char*) (malloc(24* sizeof(Mur)));
+        tab_mur  =(int*) (malloc(24* sizeof(int)));
 }
 
 
@@ -95,50 +96,85 @@ void Tuile::generateTuileClasique() {
     Melangeur * m = new Melangeur (sizeof(Case));
     //insertion dans un melangeur touts les endroit ou on peut placer des portes
     //  //0 1 2 3 4 7 8 11 12 13 14 15
-    unsigned int array[] = {0, 1, 2, 3, 4, 7, 8, 11, 12, 13, 14, 15};
+   // unsigned int array[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15};
+   unsigned int array[] = {2, 4, 11};
 
     Melangeur * mP = new Melangeur(sizeof(unsigned int));
-    for (int j = 0; j <12; ++j) {
+    for (int j = 0; j <16; ++j) {
         mP->inserer(&array[j]);
     }
 
+
     //mP->afficher();
 
-    int nb_portes = 4;
+   // int nb_portes = 4;
+
+    //on peux avoir de 1 a 3 portes
+    int nb_portes = (rand() % 2) +1;
+
+
+
 
     //insertion des cases dans melangeur
     unsigned int j =0;
 
     for (int i = 0; i <16; ++i) {
 
-
         case_tuile c_t;
 
         std::cout << nb_portes << "||" << i << ","<<array[j] <<std::endl;
 
-        if(nb_portes >0 && array[j] == i){
+        //case 13 est tjr entree
+        if(i==13){
+            c_t.color=AUCUNE;
+            c_t.f=entree;
+
+        }
+
+//        if(nb_portes >0 && array[j] == i && ((i==2) || (i==4) || (i==11))){
+//
+//            if(mP->taille_reelle>0) {
+//                c_t.f=porte;
+//                if(nb_portes==0){
+//                    c_t.color=AUCUNE;
+//                }
+//                mP->retirer(&c_t.index_); //de corectat
+//                if(nb_portes>=1){
+//                c_t.color = Couleur(rand() % 4 + 1);
+//                }
+//
+//            }
+//j++;
+//            nb_portes--;
+//
+//        }
+
+
+
+        if(nb_portes >0 && ((i==2) || (i==4) || (i==11))){
 
             if(mP->taille_reelle>0) {
                 c_t.f=porte;
-                if(nb_portes==1){
+                if(nb_portes==0){
                     c_t.color=AUCUNE;
                 }
                 mP->retirer(&c_t.index_); //de corectat
-                if(nb_portes>1){
-                c_t.color = Couleur(rand() % 4 + 1);
+                if(nb_portes>=1){
+                    c_t.color = Couleur(rand() % 4 + 1);
                 }
 
             }
-j++;
+            j++;
             nb_portes--;
 
-        }else {
+        }
+        else {
            c_t.f=norm;
             c_t.color=AUCUNE;
             c_t.index_=i;
         }
         c_t.ca = new Case(i);
-        if(array[j]<i) j++;
+        //if(array[j]<i) j++;
 
         m->inserer(&c_t);
   //      m->afficher();
@@ -209,21 +245,38 @@ void Tuile::afficher_vertical(std::ostream& out, unsigned int i) const {
 }
 
 std::ostream& operator<< (std::ostream& out, const Tuile& t) {
-  for(unsigned int i = 0; i < 4; ++i) {
-    t.afficher_horizontal(out, i) ;
-    out << std::endl ;
+    for (unsigned int i = 0; i < 4; ++i) {
+        t.afficher_horizontal(out, i);
+        out << std::endl;
 
-      for (int k = 0; k <4; ++k) {
-          case_tuile c_t;
-          memcpy(&c_t, (t.tuile_tab + (k + i * 4) * sizeof(case_tuile)), sizeof(case_tuile));
-          std::cout << c_t.f << "+";
-      }
-      t.afficher_vertical(out, i) ;
-    out << std::endl ;
+        for (int k = 0; k < 4; ++k) {
+            case_tuile c_t;
+            memcpy(&c_t, (t.tuile_tab + (k + i * 4) * sizeof(case_tuile)), sizeof(case_tuile));
+            //std::cout << c_t.f << "+";
+        }
+        t.afficher_vertical(out, i);
+        std::cout<<endl;
 
-  }
-  t.afficher_horizontal(out, 4) ;
-  return out ;
+    }
+    t.afficher_horizontal(out, 4);
+    std::cout<<endl;
+
+
+    //affichage de fonction d'une case
+    std::cout<<"affichage de fonction de chaque case"<<endl;
+
+    for (unsigned int i = 0; i < 4; ++i) {
+
+        for (int k = 0; k < 4; ++k) {
+            case_tuile c_t;
+            memcpy(&c_t, (t.tuile_tab + (k + i * 4) * sizeof(case_tuile)), sizeof(case_tuile));
+            std::cout << c_t.f << "   ";
+        }
+        std::cout<<endl;
+
+    }
+        return out;
+
 }
 
     Tuile::~Tuile() {
@@ -232,11 +285,21 @@ std::ostream& operator<< (std::ostream& out, const Tuile& t) {
     }
 
     void Tuile::generateMur(bool b) {
-        if(b){//tuile depart
+        /*if(b){//tuile depart
 
         }else{//tuile clasique
 
+        }*/
+
+        for (int i=0 ; i<24; i++){
+            tab_mur[i]=1;
+            cout<<tab_mur[i]<<" ";
+
         }
+        std::cout<<endl;
+
+
+
     }
 
 } //end of namespace MMaze

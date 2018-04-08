@@ -9,13 +9,19 @@ using namespace MMaze ;
 
 int main() {
   srand(time(NULL));
+
+
   Tuile t ;
   t.generateTuileClasique();
+
   Tuile depart;
   depart.generateTuileDepart();
+
   std::cout << t << std::endl ;
   std::cout << "-----------------" << std::endl;
   std::cout << depart << std::endl;
+
+ t.generateMur(1);
   //utilisation des couleurs
   std::cout
     << TXT_JAUNE << "&"

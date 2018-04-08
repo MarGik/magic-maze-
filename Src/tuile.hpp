@@ -10,7 +10,7 @@
 
 namespace MMaze {
 
-enum Format {porte=-1,norm=0,teleport=1};
+enum Format {porte=-1,norm=0,teleport=1, entree=2};
 
 struct case_tuile{
     Format  f;
@@ -57,6 +57,7 @@ class Tuile {
 
     char * tuile_tab;
     char * mur_tab;
+    int * tab_mur;
     case_tuile c_t;
 
 
