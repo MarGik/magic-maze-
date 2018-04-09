@@ -222,4 +222,65 @@ std::ostream& operator<< (std::ostream& out, const Tuile& t) {
 
     }
 
+
+    void Tuile::ecrireDansFichier() {
+        //verification de non existance du fichier
+        std::string fileName="";
+        std::cout << "Give a name to your file .txt\n";
+        std::cin >> fileName;
+        std::ifstream test(fileName);
+         while(test.good()){
+             std::cout << "File exists, give another name  \n";
+             std::cin >> fileName;
+             std::ifstream test(fileName.c_str());
+
+         };
+        std::ofstream myFile;
+        myFile.open(fileName,ios::out);
+        myFile<<"tuile\n";
+        for (int i = 0; i <24; ++i) {
+            if (tab_mur[i]) {
+                myFile << "mur " << i << "\n";
+            }
+        }
+        for (int i = 0; i < 16; ++i) {
+
+            case_tuile c_t;
+            c_t =*(case_tuile*) (tuile_tab + (i* sizeof(case_tuile)));
+            myFile<<"site "<< c_t.index_ <<" ";
+            switch (c_t.f){
+                case entree:{
+                    myFile<<"entree ";
+                    break;
+                }
+                case norm:{
+                    myFile<<"case vide ";
+                    break;
+                }
+                case porte:{
+                    myFile<<"port ";
+                    break;
+                }
+                case point_depart:{
+                    myFile<<"point_depart ";
+                    break;
+                }
+                case teleport:{
+                    myFile<<"teleport ";
+                    break;
+                }
+                case sortie:{
+                    myFile<<"sortie ";
+                    break;
+                }
+                default: break;
+            }
+            myFile<<c_t.color<<"\n";
+        }
+
+        myFile<<"fin\n";
+        myFile.close();
+    }
+
+
 } //end of namespace MMaze

@@ -7,10 +7,13 @@
 #include <vector>
 #include <iostream>
 #include "melangeur.hpp"
+#include <fstream>
+#include <string>
+
 
 namespace MMaze {
 
-enum Format {  point_depart=-2,porte=-1,norm=0,teleport=1, entree=2, sorti=3};
+enum Format {  point_depart=-2,porte=-1,norm=0,teleport=1, entree=2, sortie=3};
 
 struct case_tuile{
     Format  f;
@@ -44,6 +47,9 @@ class Tuile {
     void generateMur();
 
     void UnionFind();
+
+    // ecrire dans un fichier la tuile
+    void ecrireDansFichier();
 
     ~Tuile();
 

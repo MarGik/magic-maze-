@@ -93,4 +93,8 @@ iostream
 -
 melangeur.hpp
 /home/giku/Documents/LIFAP6/projet/magic-maze-etu/MagicMaze/Src/melangeur.hpp
+fstream
+-
+string
+-
 

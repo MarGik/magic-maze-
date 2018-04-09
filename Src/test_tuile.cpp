@@ -21,7 +21,9 @@ int main() {
   std::cout << "-----------------" << std::endl;
   std::cout << depart << std::endl;
 
- t.generateMur(1);
+ t.generateMur();
+    depart.generateMur();
+    depart.ecrireDansFichier();
   //utilisation des couleurs
   std::cout
     << TXT_JAUNE << "&"
