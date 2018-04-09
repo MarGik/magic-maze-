@@ -10,7 +10,7 @@
 
 namespace MMaze {
 
-enum Format {porte=-1,norm=0,teleport=1, entree=2};
+enum Format {  point_depart=-2,porte=-1,norm=0,teleport=1, entree=2, sorti=3};
 
 struct case_tuile{
     Format  f;
@@ -40,9 +40,8 @@ class Tuile {
     void generateTuileDepart();
     // genere les autre tuiles clasiques
     void generateTuileClasique();
-    //b=true Tuile Depart
-    //b=false Tuile Clasique
-    void generateMur(bool b);
+
+    void generateMur();
 
     void UnionFind();
 
@@ -56,7 +55,6 @@ class Tuile {
 
 
     char * tuile_tab;
-    char * mur_tab;
     int * tab_mur;
     case_tuile c_t;
 
