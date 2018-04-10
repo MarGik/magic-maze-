@@ -17,11 +17,19 @@ int main() {
   Tuile depart;
   depart.generateTuileDepart();
 
-  std::cout << t << std::endl ;
-  std::cout << "-----------------" << std::endl;
-  std::cout << depart << std::endl;
 
- t.generateMur();
+    t.generateMur();
+    std::cout << t << std::endl ;
+    std::cout << "-----------------" << std::endl;
+    std::cout << depart << std::endl;
+
+    t.rotationDroite();
+    std::cout << t << std::endl ;
+
+    t.rotationGauche();
+
+    std::cout << t << std::endl ;
+
     depart.generateMur();
     depart.ecrireDansFichier();
   //utilisation des couleurs

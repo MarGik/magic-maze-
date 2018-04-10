@@ -48,6 +48,10 @@ class Tuile {
 
     void UnionFind();
 
+
+    void rotationDroite();
+    void rotationGauche();
+
     // ecrire dans un fichier la tuile
     void ecrireDansFichier();
 
