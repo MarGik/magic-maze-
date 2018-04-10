@@ -119,17 +119,8 @@ namespace MMaze {
         memcpy(tuile_tab + 11 * sizeof(case_tuile), &c_t, sizeof(case_tuile));
     }
 
-    bool Tuile::mur(Mur m) const {
-      /* remplacez ce code */
 
 
-      return 1 ;
-    }
-
-    bool Tuile::accessible(Case c) const {
-      /* remplacez ce code */
-      return false ;
-    }
 
 
     void Tuile::backgroundcolor(std::ostream& out, Couleur c) const {
@@ -150,6 +141,7 @@ namespace MMaze {
         }
 
     }
+
 
 
 
@@ -192,7 +184,27 @@ namespace MMaze {
 
             }
         }
-    }
+
+   /* c_t.color = AUCUNE;
+    c_t.f = entree;
+    c_t.ca = new Case(11);
+    memcpy(tuile_tab + 11 * sizeof(case_tuile), &c_t, sizeof(case_tuile));*/
+}
+
+bool Tuile::mur(Mur m) const {
+
+
+  return tab_mur[m.index()]==1;
+}
+
+
+
+bool Tuile::accessible(Case c) const {
+  /* remplacez ce code */
+  return false ;
+}
+
+
 
 
 
@@ -430,6 +442,113 @@ namespace MMaze {
         myFile<<"fin\n";
         myFile.close();
     }
+
+    void Tuile::rotationDroite() {
+        /*
+         * int SIZE = 4;
+    int nw[SIZE][SIZE];
+    for (int row = 0; row < SIZE; row++) {
+        for (int col = 0; col < SIZE; col++) {
+            nw[col][SIZE-row-1] = arr[row][col];
+        }
+    }
+    for (int row = 0; row < SIZE; row++) {
+        for (int col = 0; col < SIZE; col++) {
+            arr[row][col] = nw[row][col];
+        }
+    }
+
+     * */
+        int SIZE=4;
+        char * nw = (char*) (malloc(16 * sizeof(case_tuile)));
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                memcpy(nw+(((SIZE-row-1) + col*SIZE)*sizeof(case_tuile)),tuile_tab+((col+row*SIZE)* sizeof(case_tuile)),
+                       sizeof(case_tuile) );
+            }
+        }
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                memcpy(tuile_tab+((col+row*SIZE)* sizeof(case_tuile)),nw+((col + row*SIZE)*sizeof(case_tuile)), sizeof(case_tuile));
+            }
+        }
+
+        bool isMur[24];
+        for (int i=0 ; i<24 ; i++) {
+            isMur[i] = tab_mur[i];
+        }
+        for (int i=0 ; i<24 ; i++){
+            int add=0;
+            if(i<12) {
+                if(i%4==0)
+                    add=15;
+                else if(i%4==1)
+                    add=13;
+                else if(i%4==2)
+                    add=11;
+                else if(i%4==3)
+                    add=9;
+            }
+            else if(i<16)
+                add=-4;
+            else if(i<20)
+                add=-12;
+            else if(i<24)
+                add=-20;
+
+            if(isMur[(i+add)%24])
+                tab_mur[i]=1;
+            else
+                tab_mur[i]=0;
+        }
+
+    }
+
+    void Tuile::rotationGauche() {
+
+        int SIZE=4;
+        char * nw = (char*) (malloc(16 * sizeof(case_tuile)));
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                memcpy(nw+((col + row * SIZE)*sizeof(case_tuile)),tuile_tab+((SIZE-row-1+col*SIZE)* sizeof(case_tuile)),
+                       sizeof(case_tuile) );
+            }
+        }
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                memcpy(tuile_tab+((col+row*SIZE)* sizeof(case_tuile)),nw+((col + row*SIZE)*sizeof(case_tuile)), sizeof(case_tuile));
+            }
+        }
+        bool isMur[24];
+        for (int i=0 ; i<24 ; i++)
+        {
+            isMur[i] = tab_mur[i];
+        }
+        for (int i=0 ; i<24 ; i++){
+            int add=0;
+            if(i<4)
+                add=20;
+            else if(i<8)
+                add=12;
+            else if(i<12)
+                add=4;
+            else if(i%4==0)
+                add=-9;
+            else if(i%4==1)
+                add=-11;
+            else if(i%4==2)
+                add=-13;
+            else if(i%4==3)
+                add=-15;
+
+            if(isMur[i+add])
+                tab_mur[i]=1;
+            else
+                tab_mur[i]=0;
+        }
+
+    }
+
 
 
 } //end of namespace MMaze

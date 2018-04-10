@@ -48,7 +48,12 @@ class Tuile {
 
     void UnionFind();
 
+
     int find(int classe_equiv[], int case_equiv);
+
+    void rotationDroite();
+    void rotationGauche();
+
 
     // ecrire dans un fichier la tuile
     void ecrireDansFichier();

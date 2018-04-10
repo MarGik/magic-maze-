@@ -1,0 +1,42 @@
+tuile
+mur 0
+mur 1
+mur 2
+mur 3
+mur 4
+mur 5
+mur 6
+mur 7
+mur 8
+mur 9
+mur 10
+mur 11
+mur 12
+mur 13
+mur 14
+mur 15
+mur 16
+mur 17
+mur 18
+mur 19
+mur 20
+mur 21
+mur 22
+mur 23
+site 0 case vide 0
+site 1 case vide 0
+site 2 port 3
+site 3 case vide 0
+site 4 port 4
+site 5 case vide 0
+site 6 case vide 0
+site 7 case vide 0
+site 8 case vide 0
+site 9 case vide 0
+site 10 case vide 0
+site 11 port 2
+site 12 case vide 0
+site 13 port 1
+site 14 case vide 0
+site 15 case vide 0
+fin
