@@ -18,7 +18,7 @@ int main() {
   depart.generateTuileDepart();
 
 
-  /*
+
 
     t.generateMur();
     std::cout << t << std::endl ;
@@ -34,8 +34,8 @@ int main() {
 
 
     depart.generateMur();
-    depart.ecrireDansFichier();
-    */
+  //  depart.ecrireDansFichier();
+
 
   //utilisation des couleurs
   std::cout

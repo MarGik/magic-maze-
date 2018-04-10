@@ -84,17 +84,26 @@ namespace MMaze {
     void Tuile::generateTuileClasique() {
          unsigned int array[] = {2, 4, 13};
 
-        Melangeur * mP = new Melangeur(sizeof(unsigned int));
+        Melangeur * mP = new Melangeur(sizeof(unsigned int));   //pour definir les places pour les portes
         for (int j = 0; j <3; ++j) {
             mP->inserer(&array[j]);
         }
+
+
+        Melangeur *mC= new Melangeur(sizeof(unsigned int));
+        for (int j = 1; j <5; ++j) {    //1 2 3 4 sont les couleurs pour les portes
+            mC->inserer(&j);
+        }
+
+
         //on peux avoir de 1 a 3 portes
-        int nb_portes = (rand() % 2) +1  ;
+        int nb_portes = (rand() % 3) +1  ;
+        cout<<"NB PORTES"<<nb_portes<<endl;
 
         for (int i = 0; i <16; ++i) {
 
             case_tuile c_t;
-            // creation des portes avec couuleurs
+            // creation des portes avec couleurs
             cout << "norm\n";
             c_t.f=norm;
             c_t.color=AUCUNE;
@@ -107,16 +116,29 @@ namespace MMaze {
         for (int i = 0; i <nb_portes; ++i) {
             c_t.f = porte;
             mP->retirer(&c_t.index_);
-            cout << c_t.index_ << "index \n ";//de corectat
-            c_t.color = Couleur(rand() % 4 + 1);
+            cout << c_t.index_ << "index \n ";
+
+
+          //  c_t.color = Couleur(rand() % 4 + 1);
+            int index_color;
+            mC->retirer(&index_color);
+           // cout<<"TAILLE EST"<<mC->taille()<<endl;
+            c_t.color=Couleur (index_color);
+           // mC->retirer(&index_color);
+
+
             c_t.ca = new Case(c_t.index_);
             memcpy(tuile_tab + c_t.index_ * sizeof(case_tuile), &c_t, sizeof(case_tuile));
         }
+
        // c_t.color = AUCUNE;
         c_t.color =LIGHTGREY;
         c_t.f = entree;
         c_t.ca = new Case(11);
         memcpy(tuile_tab + 11 * sizeof(case_tuile), &c_t, sizeof(case_tuile));
+
+        free(mP);
+        free(mC);
     }
 
 
@@ -160,7 +182,7 @@ namespace MMaze {
                     memcpy(&c_t, tuile_tab + ((j+3*4)* sizeof(case_tuile)), sizeof(case_tuile));
                 }
 
-                if (c_t.f == porte) {
+                if (c_t.f == porte ||c_t.f==entree) {
 
                     backgroundcolor(out, c_t.color);
                     out << "---";
@@ -194,7 +216,7 @@ namespace MMaze {
 bool Tuile::mur(Mur m) const {
 
 
-  return tab_mur[m.index()]==1;
+  return 1;
 }
 
 

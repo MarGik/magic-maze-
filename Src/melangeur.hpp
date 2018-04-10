@@ -21,11 +21,13 @@ class Melangeur {
     void inserer(const void* elem) ;
 
     void retirer(void* elem) ;
+
     void afficher();
 
     void vider() ;
 
     int taille() ;
+
 
   /* vos membres ici */
 
