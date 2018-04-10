@@ -21,9 +21,11 @@ int main() {
   std::cout << "-----------------" << std::endl;
   std::cout << depart << std::endl;
 
+  /*
  t.generateMur();
     depart.generateMur();
     depart.ecrireDansFichier();
+    */
   //utilisation des couleurs
   std::cout
     << TXT_JAUNE << "&"
@@ -35,6 +37,7 @@ int main() {
     << BG_ORANGE << "&"
     << BG_VERT << "&"
     << BG_VIOLET << "&"
+    << BG_LIGHTGREY << "&"
     << TXT_CLEAR
     << std::endl ;
 

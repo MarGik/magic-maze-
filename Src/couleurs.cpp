@@ -14,9 +14,10 @@ namespace MMaze {
   const char* BG_ORANGE = "\x1B[48;5;208m" ;
   const char* BG_JAUNE = "\x1B[48;5;11m" ;
   const char* BG_VERT = "\x1B[48;5;10m" ;
+  const char* BG_LIGHTGREY="\x1B[48;5;255m";
 
   const char* txt_colors[5] = {TXT_DEFAULT, TXT_JAUNE, TXT_VERT, TXT_ORANGE, TXT_VIOLET} ;
-  const char* bg_colors[5] = {BG_DEFAULT, BG_JAUNE, BG_VERT, BG_ORANGE, BG_VIOLET} ;
+  const char* bg_colors[6] = {BG_DEFAULT, BG_JAUNE, BG_VERT, BG_ORANGE, BG_VIOLET, BG_LIGHTGREY} ;
 
 } //end of namespace MMaze
 

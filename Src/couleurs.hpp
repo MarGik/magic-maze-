@@ -8,7 +8,8 @@ namespace MMaze {
     JAUNE,
     VERT,
     ORANGE,
-    VIOLET
+    VIOLET,
+    LIGHTGREY
   } ;
 
   extern const char* TXT_CLEAR ;
@@ -23,9 +24,10 @@ namespace MMaze {
   extern const char* BG_ORANGE ;
   extern const char* BG_JAUNE ;
   extern const char* BG_VERT ;
+  extern const char* BG_LIGHTGREY;
 
   extern const char* txt_colors[5] ;
-  extern const char* bg_colors[5] ;
+  extern const char* bg_colors[6] ;
 
 } //end of namespace MMaze
 

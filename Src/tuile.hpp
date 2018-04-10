@@ -48,6 +48,8 @@ class Tuile {
 
     void UnionFind();
 
+    int find(int classe_equiv[], int case_equiv);
+
     // ecrire dans un fichier la tuile
     void ecrireDansFichier();
 
@@ -55,6 +57,7 @@ class Tuile {
 
   private :
 
+    void backgroundcolor(std::ostream& out, Couleur c) const ;
     //affichage
     void afficher_horizontal(std::ostream& out, unsigned int i) const ;
     void afficher_vertical(std::ostream& out, unsigned int i) const ;
