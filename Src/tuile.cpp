@@ -98,7 +98,7 @@ namespace MMaze {
 
 
         //on peux avoir de 1 a 3 portes
-       
+
         case_tuile c_t;
 
         int nb_portes = (rand() % 3) +1  ;
@@ -120,7 +120,7 @@ namespace MMaze {
         for (int i = 0; i <nb_portes; ++i) {
             c_t.f = porte;
             mP->retirer(&c_t.index_);
-            cout << c_t.index_ << "index \n ";
+         //   cout << c_t.index_ << "index \n ";
 
 
           //  c_t.color = Couleur(rand() % 4 + 1);
@@ -149,6 +149,7 @@ namespace MMaze {
             gen[k]=k;
         }
 
+        generateMur(gen);
  //       generateMur(gen);
         free(gen);
 
@@ -363,25 +364,37 @@ bool Tuile::accessible(Case c) const {
 
 
         case_tuile c_t_depart;
-        memcpy(&c_t_depart,tuile_tab+11* sizeof(case_tuile), sizeof(case_tuile));
+        int arr [] = {2,4,11,13};
+        for (int i = 0; i <4; ++i) {
 
-        int arr [] = {2,4,13};
-        for (int i = 0; i <3; ++i) {
-            case_tuile c_t_arrive;
-            memcpy(&c_t_arrive,tuile_tab+arr[i]* sizeof(case_tuile), sizeof(case_tuile));
-            if(c_t_arrive.f==porte){
-                int x = find(tabCase,11);
-                int y = find(tabCase,arr[i]);
-                if (x==y) break;
-                Union(tabCase,x,y);
+            for (int j = 0; j <16; ++j) {
+
+                case_tuile c_t_arrive;
+
+                memcpy(&c_t_depart,tuile_tab+arr[i]* sizeof(case_tuile), sizeof(case_tuile));
+
+                memcpy(&c_t_arrive,tuile_tab+(j)* sizeof(case_tuile), sizeof(case_tuile));
+                std::cout << c_t_depart.index_ << "xa,ya " << c_t_arrive.index_ << std::endl;
+
+                //if(c_t_depart.f==porte || c_t_depart.f==entree) {
+                        int x = find(tabCase, c_t_depart.index_);
+                        int y = find(tabCase, c_t_arrive.index_ % 4);
+                        std::cout << x << "x,y " << y << std::endl;
+                      //  if (x == y) break;
+                        Union(tabCase, x, y);
+                  //  }
             }
         }
 
 
-//        Mur mur[24];
-        for (int j = 0; j <4; ++j) {
-            for (int i = 0; i <4; ++i) {
-                std::cout<<tabCase[i+j*4]<<" ";
+       Mur mur(0);
+        for (int j = 0; j <16; ++j) {
+            //for (int i = 0; i <4; ++i) {
+               /* std::cout<<tabCase[j]<<" ";
+                Case c1=Case(j);
+                Case c2=Case(k);
+                mur[i]=Mur()
+*/
             }
             std::cout<<std::endl;
         }
@@ -392,6 +405,9 @@ bool Tuile::accessible(Case c) const {
             classe_equiv[case_equiv] = find(classe_equiv,classe_equiv[case_equiv]);
 
         return classe_equiv[case_equiv];
+
+
+
     }
 
 
@@ -403,6 +419,13 @@ bool Tuile::accessible(Case c) const {
         else if (tabCase[start]>=tabCase[finish])
             tabCase[finish]=start;
 
+      /*  for (int i = 0; i <4; ++i) {
+            for (int j = 0; j <4; ++j) {
+                std::cout << tabCase[j+i*4] << " ";
+            }
+            std::cout << "\n";
+        }
+        */
     }
 
     /*UNION FIND*/
@@ -474,26 +497,7 @@ bool Tuile::accessible(Case c) const {
     }
 
     void Tuile::rotationDroite() {
-<<<<<<< HEAD
-||||||| merged common ancestors
-        /*
-         * int SIZE = 4;
-    int nw[SIZE][SIZE];
-    for (int row = 0; row < SIZE; row++) {
-        for (int col = 0; col < SIZE; col++) {
-            nw[col][SIZE-row-1] = arr[row][col];
-        }
-    }
-    for (int row = 0; row < SIZE; row++) {
-        for (int col = 0; col < SIZE; col++) {
-            arr[row][col] = nw[row][col];
-        }
-    }
 
-     * */
-=======
-
->>>>>>> f34f63f40f70ed97d5fff36ba60b91bca86d0bc5
         int SIZE=4;
         char * nw = (char*) (malloc(16 * sizeof(case_tuile)));
         for (int row = 0; row < SIZE; row++) {

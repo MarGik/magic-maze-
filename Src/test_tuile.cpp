@@ -24,15 +24,6 @@ int main() {
   depart.generateTuileDepart();
 
 
-<<<<<<< HEAD
-||||||| merged common ancestors
-  /*
-=======
-
->>>>>>> f34f63f40f70ed97d5fff36ba60b91bca86d0bc5
-
-
-
     std::cout << t << std::endl ;
     std::cout << "-----------------" << std::endl;
     std::cout << depart << std::endl;
@@ -45,22 +36,14 @@ int main() {
     std::cout << t << std::endl ;
 
 
-<<<<<<< HEAD
+
     //depart.generateMur(&depart);
-    depart.ecrireDansFichier();
-
-||||||| merged common ancestors
-    depart.generateMur();
-    depart.ecrireDansFichier();
-    */
-=======
-    depart.generateMur();
-  //  depart.ecrireDansFichier();
+    //    depart.ecrireDansFichier();
 
 
-  Graphe g(t);
-  g.afficher();
->>>>>>> f34f63f40f70ed97d5fff36ba60b91bca86d0bc5
+//  Graphe g(t);
+ // g.afficher();
+
 
   //utilisation des couleurs
   std::cout
