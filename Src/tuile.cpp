@@ -36,7 +36,7 @@ namespace MMaze {
 
         for (int i = 0; i <16; ++i) {
             case_tuile c_t;
-            c_t.ca  = new Case(i);
+            //c_t.ca  = new Case(i);
                 switch (i) {
                     case 2 :{
                         c_t.f=porte;
@@ -75,6 +75,7 @@ namespace MMaze {
             delete c_t.ca;
         }
 
+
     }
 
 
@@ -90,11 +91,12 @@ namespace MMaze {
         }
         //on peux avoir de 1 a 3 portes
         int nb_portes = (rand() % 2) +1  ;
+        case_tuile c_t;
 
         for (int i = 0; i <16; ++i) {
 
-            case_tuile c_t;
             // creation des portes avec couuleurs
+
             cout << "norm\n";
             c_t.f=norm;
             c_t.color=AUCUNE;
@@ -117,6 +119,17 @@ namespace MMaze {
         c_t.f = entree;
         c_t.ca = new Case(11);
         memcpy(tuile_tab + 11 * sizeof(case_tuile), &c_t, sizeof(case_tuile));
+
+        delete c_t.ca;
+
+
+        int * gen=(int*)malloc(16* sizeof(int));
+        for (int k = 0; k <16; ++k) {
+            gen[k]=k;
+        }
+
+ //       generateMur(gen);
+        free(gen);
     }
 
 
@@ -160,7 +173,7 @@ namespace MMaze {
                     memcpy(&c_t, tuile_tab + ((j+3*4)* sizeof(case_tuile)), sizeof(case_tuile));
                 }
 
-                if (c_t.f == porte) {
+                if (c_t.f == porte || c_t.f==entree) {
 
                     backgroundcolor(out, c_t.color);
                     out << "---";
@@ -308,65 +321,62 @@ bool Tuile::accessible(Case c) const {
         free(tuile_tab);
     }
 
-    void Tuile::generateMur() {
+    void Tuile::generateMur(int * tabCase) {
 
-//
-//
-//
-//    Melangeur * m = new Melangeur (sizeof(Case));
-//
-//        for (int i=0 ; i<24; i++){
-//            tab_mur[i]=1;
-//            cout<<tab_mur[i]<<" ";
-//
-//        }
-//        std::cout<<endl;
-//
-//        for(int i=0; i<24; i++){
-//            Mur mur(i); //construction d'un mur
-//            m-> inserer(&mur); //ajout de mur en melangeur
-//        }
-//
-//        bool arreter = false;
-//
-//        //il faut casser les murs jusqu'a la chemin est bon
-//
-//        while(arreter==false) {
-//            case_tuile c_t;
-//
-//            arreter=true;
-//            Mur mur(0);
-//            m->retirer(&mur);
-//            tab_mur[mur.index()]==0;
-//            int case1= mur[0].index();
-//            int case2 = mur[1].index();
-//
-//            case1=find(case1, tuile_tab);
-//            case2=find(case2, tuile_tab);
-//            c_t[case1]=c_t[case2];
-//
-//            int var=-1;
-//
-//            for (int i=0; i<16; i++){
-//
-//                if (site[i]!=0)
-//                {
-//                    if (var <0)
-//                        var=find (i, c_t);
-//
-//
-//
-//                    if (find (i, c_t)!=var);
-//                        arreter=false;
-//                    break;
-//                }
-//        }
-//
-//
-//
+        Melangeur * mMur = new Melangeur (sizeof(Case));
 
+
+
+
+        for (int i = 0; i <16; ++i) {
+           // mur[i]=Mur(i);
+
+          tabCase[i]=i;
+        }
+
+
+        case_tuile c_t_depart;
+        memcpy(&c_t_depart,tuile_tab+11* sizeof(case_tuile), sizeof(case_tuile));
+
+        int arr [] = {2,4,13};
+        for (int i = 0; i <3; ++i) {
+            case_tuile c_t_arrive;
+            memcpy(&c_t_arrive,tuile_tab+arr[i]* sizeof(case_tuile), sizeof(case_tuile));
+            if(c_t_arrive.f==porte){
+                int x = find(tabCase,11);
+                int y = find(tabCase,arr[i]);
+                if (x==y) break;
+                Union(tabCase,x,y);
+            }
+        }
+
+
+//        Mur mur[24];
+        for (int j = 0; j <4; ++j) {
+            for (int i = 0; i <4; ++i) {
+                std::cout<<tabCase[i+j*4]<<" ";
+            }
+            std::cout<<std::endl;
+        }
     }
 
+    int Tuile::find(int *classe_equiv, int case_equiv) {
+        if (classe_equiv[case_equiv] != case_equiv)
+            classe_equiv[case_equiv] = find(classe_equiv,classe_equiv[case_equiv]);
+
+        return classe_equiv[case_equiv];
+    }
+
+
+    void Tuile::Union(int * tabCase,int x , int y ){
+        int start  = find(tabCase,x);
+        int finish = find(tabCase,y);
+        if(tabCase[start]<tabCase[finish])
+            tabCase[start]=finish;
+        else if (tabCase[start]>=tabCase[finish])
+            tabCase[finish]=start;
+
+    }
 
     /*UNION FIND*/
     // union - connects two objects - https://www.geeksforgeeks.org/union-find-algorithm-set-2-union-by-rank/
@@ -374,13 +384,6 @@ bool Tuile::accessible(Case c) const {
 
 
 
-    int Tuile:: find(int classe_equiv[], int case_equiv)
-    {
-        if (classe_equiv[case_equiv] != case_equiv)
-            classe_equiv[case_equiv] = find(classe_equiv,classe_equiv[case_equiv] );
-
-        return classe_equiv[case_equiv];
-    }
 
 
 
@@ -444,21 +447,6 @@ bool Tuile::accessible(Case c) const {
     }
 
     void Tuile::rotationDroite() {
-        /*
-         * int SIZE = 4;
-    int nw[SIZE][SIZE];
-    for (int row = 0; row < SIZE; row++) {
-        for (int col = 0; col < SIZE; col++) {
-            nw[col][SIZE-row-1] = arr[row][col];
-        }
-    }
-    for (int row = 0; row < SIZE; row++) {
-        for (int col = 0; col < SIZE; col++) {
-            arr[row][col] = nw[row][col];
-        }
-    }
-
-     * */
         int SIZE=4;
         char * nw = (char*) (malloc(16 * sizeof(case_tuile)));
         for (int row = 0; row < SIZE; row++) {

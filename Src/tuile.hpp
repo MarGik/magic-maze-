@@ -44,13 +44,12 @@ class Tuile {
     // genere les autre tuiles clasiques
     void generateTuileClasique();
 
-    void generateMur();
+    void generateMur(int * tab);
 
-    void UnionFind();
 
 
     int find(int classe_equiv[], int case_equiv);
-
+    void Union(int * tabCase,int x, int y);
     void rotationDroite();
     void rotationGauche();
 
