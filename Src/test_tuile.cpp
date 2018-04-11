@@ -1,9 +1,11 @@
 #include "tuile.hpp"
+#include "graphe.hpp"
 #include "melangeur.hpp"
 #include "couleurs.hpp"
 
 #include <iostream>
 #include <cstdlib>
+#include <time.h>
 #include <time.h>
 using namespace MMaze ;
 
@@ -11,8 +13,12 @@ int main() {
   srand(time(NULL));
 
 
+
+
   Tuile t ;
   t.generateTuileClasique();
+
+
 
   Tuile depart;
   depart.generateTuileDepart();
@@ -36,6 +42,9 @@ int main() {
     depart.generateMur();
   //  depart.ecrireDansFichier();
 
+
+  Graphe g(t);
+  g.afficher();
 
   //utilisation des couleurs
   std::cout

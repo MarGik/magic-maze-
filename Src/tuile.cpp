@@ -214,14 +214,16 @@ namespace MMaze {
 }
 
 bool Tuile::mur(Mur m) const {
-
-
-  return 1;
+if(m.index()==12 ||m.index()==20 || m.index()==8){
+    return 1;
+}
+  return 0;     //tous les murs existent
 }
 
 
 
 bool Tuile::accessible(Case c) const {
+
   /* remplacez ce code */
   return false ;
 }
@@ -466,21 +468,7 @@ bool Tuile::accessible(Case c) const {
     }
 
     void Tuile::rotationDroite() {
-        /*
-         * int SIZE = 4;
-    int nw[SIZE][SIZE];
-    for (int row = 0; row < SIZE; row++) {
-        for (int col = 0; col < SIZE; col++) {
-            nw[col][SIZE-row-1] = arr[row][col];
-        }
-    }
-    for (int row = 0; row < SIZE; row++) {
-        for (int col = 0; col < SIZE; col++) {
-            arr[row][col] = nw[row][col];
-        }
-    }
 
-     * */
         int SIZE=4;
         char * nw = (char*) (malloc(16 * sizeof(case_tuile)));
         for (int row = 0; row < SIZE; row++) {
