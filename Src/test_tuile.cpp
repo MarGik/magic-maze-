@@ -45,6 +45,8 @@ int main() {
  // g.afficher();
 
 
+  t.parcours_largeur(Case(0));
+
   //utilisation des couleurs
   std::cout
     << TXT_JAUNE << "&"

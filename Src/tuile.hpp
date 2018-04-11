@@ -47,6 +47,7 @@ class Tuile {
     void generateMur(int * tab);
 
 
+    void parcours_largeur(Case debut);
 
     int find(int classe_equiv[], int case_equiv);
     void Union(int * tabCase,int x, int y);
@@ -65,6 +66,8 @@ class Tuile {
     //affichage
     void afficher_horizontal(std::ostream& out, unsigned int i) const ;
     void afficher_vertical(std::ostream& out, unsigned int i) const ;
+
+
 
 
     char * tuile_tab;
