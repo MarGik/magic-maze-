@@ -1,10 +1,16 @@
 #include "tuile.hpp"
 #include "couleurs.hpp"
+#include "graphe.hpp"
 
 #include <cassert>
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
+#include <functional>
+#include <queue>
+#include <limits>
+#include <stack>
+#include <iomanip>
 
 
 
@@ -217,7 +223,7 @@ bool Tuile::mur(Mur m) const {
 if(m.index()==12 ||m.index()==20 || m.index()==8){
     return 1;
 }
-  return 0;     //tous les murs existent
+  return 0;     //tous les murs n'existent
 }
 
 
@@ -465,6 +471,80 @@ bool Tuile::accessible(Case c) const {
 
         myFile<<"fin\n";
         myFile.close();
+    }
+
+
+    //'idee de l'Algo pour parcours en largeur est pris de CM et etait "traduit" en C++ par nous
+    //priority queue :http://en.cppreference.com/w/cpp/container/priority_queue
+
+    //erreur quelque part
+
+    void Tuile:: parcours_largeur(Case debut){
+        int s=debut.index(); //sommet
+        Graphe gr = Graphe(*this); //is a reference to the same
+        std::vector <int>voisins_all[16];
+        std::priority_queue<int> q;
+        int distance[16];
+        int predec[16];
+
+
+        //ajouter dans voisins_all tous les noeuds accessible (gauche+droite+haut+bas)
+
+/* exemple de StackOverflow
+        AB.reserve( A.size() + B.size() ); // preallocate memory
+        AB.insert( AB.end(), A.begin(), A.end() );
+        AB.insert( AB.end(), B.begin(), B.end() );
+*/
+
+        for(int i=0; i<16; i++){
+            voisins_all[i].insert(voisins_all[i].end(), gr.cases_graphe_gauche[i].begin(), gr.cases_graphe_gauche[i].end() );
+            voisins_all[i].insert(voisins_all[i].end(), gr.cases_graphe_droite[i].begin(), gr.cases_graphe_droite[i].end() );
+            voisins_all[i].insert(voisins_all[i].end(), gr.cases_graphe_haut[i].begin(), gr.cases_graphe_haut[i].end() );
+            voisins_all[i].insert(voisins_all[i].end(), gr.cases_graphe_bas[i].begin(), gr.cases_graphe_bas[i].end() );
+        }
+
+
+        //on remplit les distances et predecesseurs
+        for(int i=0; i<16; i++){
+            distance[i]=std::numeric_limits<int>::max(); //the largest possible value
+            predec[i]=-1;    //doit etre invalide
+        }
+
+        //on ajout s dans F et initialise pour s
+        q.push(s);
+        distance[s]=0;
+        predec[s]=s;
+
+
+        //TQ
+        while(!q.empty()){
+            int n = q.top(); //sommet de file
+            q.pop(); // retirer sommet
+
+            //pour chaque voisin v de n
+            for(unsigned int i=0;i<voisins_all[n].size();i++){
+                int dist = distance[n]+1;
+                if(dist < distance[voisins_all[n][i]]){
+                    q.push(voisins_all[n][i]);
+                    distance[voisins_all[n][i]] = dist;
+                    predec[voisins_all[n][i]] = n;
+                }
+            }
+
+        }
+
+        //on doit recuperer le chemin
+
+        for(int i=0;i<16;i++){
+            std::cout<<setw(2)<<i;
+            cout<<setw(15)<<"distance ";
+            cout<<setw(15)<<distance[i];
+            cout<<setw(15)<<"predecesseur ";
+            cout<<setw(15)<<predec[i]<<endl;
+        }
+
+
+
     }
 
     void Tuile::rotationDroite() {
