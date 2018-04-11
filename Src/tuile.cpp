@@ -85,18 +85,29 @@ namespace MMaze {
     void Tuile::generateTuileClasique() {
          unsigned int array[] = {2, 4, 13};
 
-        Melangeur * mP = new Melangeur(sizeof(unsigned int));
+        Melangeur * mP = new Melangeur(sizeof(unsigned int));   //pour definir les places pour les portes
         for (int j = 0; j <3; ++j) {
             mP->inserer(&array[j]);
         }
+
+
+        Melangeur *mC= new Melangeur(sizeof(unsigned int));
+        for (int j = 1; j <5; ++j) {    //1 2 3 4 sont les couleurs pour les portes
+            mC->inserer(&j);
+        }
+
+
         //on peux avoir de 1 a 3 portes
-        int nb_portes = (rand() % 2) +1  ;
+       
         case_tuile c_t;
+
+        int nb_portes = (rand() % 3) +1  ;
+        cout<<"NB PORTES"<<nb_portes<<endl;
 
         for (int i = 0; i <16; ++i) {
 
+            case_tuile c_t;
             // creation des portes avec couuleurs
-
             cout << "norm\n";
             c_t.f=norm;
             c_t.color=AUCUNE;
@@ -109,11 +120,21 @@ namespace MMaze {
         for (int i = 0; i <nb_portes; ++i) {
             c_t.f = porte;
             mP->retirer(&c_t.index_);
-            cout << c_t.index_ << "index \n ";//de corectat
-            c_t.color = Couleur(rand() % 4 + 1);
+            cout << c_t.index_ << "index \n ";
+
+
+          //  c_t.color = Couleur(rand() % 4 + 1);
+            int index_color;
+            mC->retirer(&index_color);
+           // cout<<"TAILLE EST"<<mC->taille()<<endl;
+            c_t.color=Couleur (index_color);
+           // mC->retirer(&index_color);
+
+
             c_t.ca = new Case(c_t.index_);
             memcpy(tuile_tab + c_t.index_ * sizeof(case_tuile), &c_t, sizeof(case_tuile));
         }
+
        // c_t.color = AUCUNE;
         c_t.color =LIGHTGREY;
         c_t.f = entree;
@@ -130,6 +151,9 @@ namespace MMaze {
 
  //       generateMur(gen);
         free(gen);
+
+        free(mP);
+        free(mC);
     }
 
 
@@ -175,6 +199,7 @@ namespace MMaze {
 
                 if (c_t.f == porte || c_t.f==entree) {
 
+
                     backgroundcolor(out, c_t.color);
                     out << "---";
                     out << BG_DEFAULT << "+";
@@ -205,14 +230,16 @@ namespace MMaze {
 }
 
 bool Tuile::mur(Mur m) const {
-
-
-  return tab_mur[m.index()]==1;
+if(m.index()==12 ||m.index()==20 || m.index()==8){
+    return 1;
+}
+  return 0;     //tous les murs existent
 }
 
 
 
 bool Tuile::accessible(Case c) const {
+
   /* remplacez ce code */
   return false ;
 }
@@ -447,6 +474,26 @@ bool Tuile::accessible(Case c) const {
     }
 
     void Tuile::rotationDroite() {
+<<<<<<< HEAD
+||||||| merged common ancestors
+        /*
+         * int SIZE = 4;
+    int nw[SIZE][SIZE];
+    for (int row = 0; row < SIZE; row++) {
+        for (int col = 0; col < SIZE; col++) {
+            nw[col][SIZE-row-1] = arr[row][col];
+        }
+    }
+    for (int row = 0; row < SIZE; row++) {
+        for (int col = 0; col < SIZE; col++) {
+            arr[row][col] = nw[row][col];
+        }
+    }
+
+     * */
+=======
+
+>>>>>>> f34f63f40f70ed97d5fff36ba60b91bca86d0bc5
         int SIZE=4;
         char * nw = (char*) (malloc(16 * sizeof(case_tuile)));
         for (int row = 0; row < SIZE; row++) {
